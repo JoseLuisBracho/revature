@@ -83,6 +83,10 @@ public class Main {
 		
 		System.out.println("\nPrinting palindrome between 1000-9999 using BufferString class");
 		ArraysTasks.palindromeNewStyle();
+		
+		System.out.println("\nPrinting a string with last letter capitalized");
+		String phrase = "Sorry i forgot to do this task i realized about it today";
+		ArraysTasks.capLastLetter(phrase);
 
 	}
 
