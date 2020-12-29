@@ -1,0 +1,21 @@
+package com.app.dao.impl;
+
+import com.app.dao.List;
+import com.app.dao.Player;
+import com.app.dao.PlayerSearchDAO;
+
+public class PlayerSearchDAOImpl implements PlayerSearchDAO {
+
+	@Override
+	public Player getPlayerByContact(Long gggh) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Player> getPlayerByGenger(String gendr) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

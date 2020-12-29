@@ -1,0 +1,96 @@
+package com.app.service.impl;
+
+import java.util.List;
+
+import com.app.dao.PlayerSearchDAO;
+import com.app.dao.impl.PlayerSearchDAOImpl;
+import com.app.exception.BusinessException;
+import com.app.model.Player;
+import com.app.servive.PlayerSearchServive;
+
+public class PlayerSearchServiceImpl implements PlayerSearchServive {
+	
+	PlayerSearchDAO playerSearchDAO = new PlayerSearchDAOImpl();
+
+	@Override
+	public Player getPlayerById(int playerid) throws BusinessException {
+		// TODO Auto-generated method stub
+		Player player = null;
+		if (playerid > 0 && playerid < 100) {
+			//Code for DAO
+			player = playerSearchDAO.getPlayerById(playerid);
+		} else {
+			throw new BusinessException("Entered Player Id " + playerid + " is INVALID....");
+		}
+		return player;
+	}
+
+	@Override
+	public Player getPlayerByContact(long contact) throws BusinessException {
+		// TODO Auto-generated method stub
+		Player player = null;
+		if (contact > 99999999 && contact < 999999999) {
+			//Code for DAO
+			player = playerSearchDAO.getPlayerByContact(contact);
+		} else {
+			throw new BusinessException("Entered Player Comtact number " + contact + " is INVALID....");
+		}
+		return player;
+	}
+
+	@Override
+	public List<Player> getPlayersByAge(int age) throws BusinessException {
+		// TODO Auto-generated method stub
+		List<Player> playersAgeList = null;
+		if (age > 18 && age < 50) {
+			//Code for DAO
+			playersAgeList = playerSearchDAO.getPlayersByAge(age);
+		} else {
+			throw new BusinessException("Entered Player Age " + age + " is INVALID....");
+		}
+		return playersAgeList;
+	}
+
+	@Override
+	public List<Player> getPlayersByPosition(String position) throws BusinessException {
+		// TODO Auto-generated method stub
+		List<Player> playersPositionList = null;
+		
+		if (position != null) {
+			//Code for DAO
+			playersPositionList = playerSearchDAO.getPlayersByPosition(position);
+			
+		} else {
+			throw new BusinessException("Entered Player Position" + position + " in INVALID");
+		}
+
+		return playersPositionList;
+	}
+
+	@Override
+	public List<Player> getPlayersByTeamName(String teamname) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Player> getPlayersByName(String playername) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Player> getPlayersByDob(String dob) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Player> getAllPlayers() throws BusinessException {
+		// TODO Auto-generated method stub
+		List<Player> allPlayersList = null;
+		allPlayersList = playerSearchDAO.getAllPlayers();
+		return allPlayersList;
+	}
+
+}

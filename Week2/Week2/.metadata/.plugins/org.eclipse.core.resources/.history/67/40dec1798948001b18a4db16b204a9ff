@@ -1,0 +1,21 @@
+package com.app.main;
+
+import java.util.Scanner;
+
+public class PlayerSearchMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Welcome to PlayerSearch App V1.0");
+		System.out.println("----------------------------------------");
+		int ch = 0;
+		do {
+			System.out.println("  ");
+		} while (ch!=9);
+		
+		System.out.println("  ");
+
+	}
+
+}

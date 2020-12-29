@@ -1,0 +1,7 @@
+package com.app.dao;
+
+public interface PlayerSearchDAO {
+	public Player getPlayerByContact(Long gggh);
+	public List<Player> getPlayerByGenger(String gendr);
+
+}

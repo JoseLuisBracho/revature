@@ -1,0 +1,204 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9  1) What is a RDBMS?\par
+It the acronymous for Relational Data Base Management System. It uses Strutured Query Language (SQL) for storing, manipulating and retrieving data stored. There are subtle diferences in SQL according the vendor.\par
+\par
+2) What is Normalization (1NF, 2NF, 3NF, 3.5NF)?\par
+Normalization consists of a series of guidelines that help guide you in creating a good database structure.\par
+The aim of normal forms is to organize the database structure, so that it complies with the rules of first normal form, then second normal form and finally the third normal form.\par
+\ul 1NF (First Normal Form) Rules\par
+
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\ulnone Each table cell should contain a single value.\par
+{\pntext\f1\'B7\tab}Each record needs to be unique.\par
+
+\pard\sa200\sl276\slmult1 A composite key is a primary key composed of multiple columns used to identify a record uniquely. For example, two pleople with the same name and different ids.\par
+\ul 2NF (Second Normal Form) Rules\par
+
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\ulnone Rule 1- Be in 1NF\par
+{\pntext\f1\'B7\tab}Rule 2- Single Column Primary Key\par
+
+\pard\sa200\sl276\slmult1 It is clear that we can't move forward to make our simple database in 2nd Normalization form unless we partition the table.\par
+This normalization refers to use and necessity of a pair primary key - foreign key when planning the structure of a database or tables.\par
+\ul 3NF (Third Normal Form) Rules\par
+\ulnone Rule 1- Be in 2NF\par
+Rule 2- Has no transitive functional dependencies\par
+To move our 2NF table into 3NF, we again need to again divide the table.\par
+A transitive functional dependency is when changing a non-key column, might cause any of the other non-key columns to change.\par
+\ul BCNF (Boyce-Codd Normal Form)\par
+\ulnone Even when a database is in 3rd Normal Form, still there would be anomalies resulted if it has more than one Candidate Key.\par
+Sometimes is BCNF is also referred as 3.5 Normal Form.\par
+\par
+ \par
+3) What are the data types of SQL?\par
+In a database, each column of a table has a specific data type. A data type specifies the type of data that column can hold. The data types name and scope(uses) depends on the vendor; there are many different data types; we list the most common of them.\par
+\ul Character String \par
+
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\ulnone Most database systems use CHAR instead of CHARACTER for representing the fixed-length character data type:\par
+
+\pard\sa200\sl276\slmult1 CHAR(n)\tab n is a fixed-length number of characters.\par
+
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Most database systems use VARCHAR for representing the varying-length character data type such as MySQL and Microsoft SQL Server. Oracle uses both VARCHAR2 and VARCHAR.\par
+
+\pard\sa200\sl276\slmult1 VARCHAR(n)\tab n is a variable-length number of characters.\par
+\ul Numeric types\par
+\ulnone Numeric types consist of two-byte, four-byte, and eight-byte integers, four-byte and eight-byte floating-point numbers, and selectable-precision decimals. The following table lists the available types.\par
+\b Name\tab\tab\tab Storage Size\tab Range\par
+\b0 smallint\tab\tab 2 bytes\tab\tab -32768 to +32767\par
+integer\tab\tab\tab 4 bytes\tab\tab -2147483648 to +2147483647\par
+bigint\tab\tab\tab 8 bytes\tab\tab -9223372036854775808 to 9223372036854775807\par
+decimal\tab\tab variable\tab up to 16383 digits after the decimal point\par
+numeric\tab\tab variable\tab up to 16383 digits after the decimal point\par
+real\tab\tab\tab 4 bytes\tab\tab 6 decimal digits precision\par
+double precision\tab 8 bytes\tab\tab 15 decimal digits precision\par
+smallserial\tab\tab 2 bytes\tab\tab 1 to 32767\par
+serial\tab\tab\tab 4 bytes\tab\tab 1 to 2147483647\par
+bigserial\tab\tab 8 bytes\tab\tab 1 to 9223372036854775807\par
+\ul Date and Time type\par
+\ulnone The date and time data types are used to store information related to dates and times. SQL supports the following date and time data types:\par
+DATE\par
+The date value generally is specified in the form:\par
+'YYYY-DD-MM'\par
+TIME\par
+The TIME values should be specified in the following form:\par
+'HH:MM:SS'\par
+TIMESTAMP\par
+The TIMESTAMP values are specified in the following form:\par
+TIMESTAMP 'YYYY-MM-DD HH:MM:SS'\par
+\ul Monetary\par
+\ulnone The money type stores a currency amount with a fixed fractional precision. Values of the numeric, int, and bigint data types can be cast to money.\par
+MONEY\par
+
+\pard\sa200\sl276\slmult1\ul Boolean type\par
+\ulnone PostgreSQL provides the standard SQL type Boolean. The Boolean data type can have the states true, false, and a third state, unknown, which is represented by the SQL null value.\par
+boolean\par
+...and many others.\par
+\par
+ 4) Describe Sub-Languages of SQL (DDL, DML, DQL, DCL, TCL)\par
+\ul DDL (Data Definition Language)\par
+\ulnone These statements are used to create tables and databases and define field properties or table properties. Examples of commands that fall in this category are CREATE,ALTER and DROP statements\par
+\par
+\ul DML (Data Manipulation Language)\par
+\ulnone The statements that falls under this category are used to update data or add or remove data from tables. UPDATE, DELETE and INSERT commands fall under this category.\par
+\par
+\ul DCL (Data Control Language)\par
+\ulnone It is used to control who access the data. The commands that come under this category are GRANT and REVOKE\par
+\par
+\ul TCL (Transaction Control Language)\par
+\ulnone This language is used to commit data and restore data. COMMIT and ROLLBACK falls under this category.\par
+\par
+\ul DQL (Data Query Language)\par
+\ulnone This is to retrieve data from sql server. SELECT statement falls in this category.\par
+\par
+5) What are the constraints of SQL? (Unique, Primary, Not Null, Check) Integrity-referential (Foreign Key)\par
+Data types are a way to limit the kind of data that can be stored in a table. For many applications, however, the constraint they provide is too coarse.  Constraints give you as much control over the data in your tables as you wish. If a user attempts to store data in a column that would violate a constraint, an error is raised. This applies even if the value came from the default value definition.\par
+\ul Unique\par
+\ulnone Unique constraints ensure that the data contained in a column, or a group of columns, is unique among all the rows in the table. The sintaxes are:\par
+CREATE TABLE products (\par
+    product_no integer UNIQUE,\par
+    name text,\par
+    price numeric\par
+);\par
+\par
+CREATE TABLE products (\par
+    product_no integer,\par
+    name text,\par
+    price numeric,\par
+    UNIQUE (product_no)\par
+);\par
+\par
+CREATE TABLE example (\par
+    a integer,\par
+    b integer,\par
+    c integer,\par
+    UNIQUE (a, c)\par
+);\par
+\par
+\ul Primary key\par
+\ulnone A primary key constraint indicates that a column, or group of columns, can be used as a unique identifier for rows in the table. This requires that the values be both unique and not null. So, the following two table definitions accept the same data:\par
+CREATE TABLE products (\par
+    product_no integer UNIQUE NOT NULL,\par
+    name text,\par
+    price numeric\par
+);\par
+CREATE TABLE products (\par
+    product_no integer PRIMARY KEY,\par
+    name text,\par
+    price numeric\par
+);\par
+CREATE TABLE example (\par
+    a integer,\par
+    b integer,\par
+    c integer,\par
+    PRIMARY KEY (a, c)\par
+);\par
+A table can have at most one primary key. (There can be any number of unique and not-null constraints, which are functionally almost the same thing, but only one can be identified as the primary key.) Relational database theory dictates that every table must have a primary key\par
+\par
+\ul Not Null\par
+\ulnone A not-null constraint simply specifies that a column must not assume the null value. A syntax example:\par
+CREATE TABLE products (\par
+    product_no integer NOT NULL,\par
+    name text NOT NULL,\par
+    price numeric\par
+);\par
+\par
+\ul Check\par
+\ulnone A check constraint is the most generic constraint type. It allows you to specify that the value in a certain column must satisfy a Boolean (truth-value) expression. For instance, to require positive product prices, you could use:\par
+CREATE TABLE products (\par
+    product_no integer,\par
+    name text,\par
+    price numeric CHECK (price > 0)\par
+);\par
+You can give a specific name to the constraint:\par
+CREATE TABLE products (\par
+    product_no integer,\par
+    name text,\par
+    price numeric CONSTRAINT positive_price CHECK (price > 0)\par
+);\par
+Check can operate in  several columns:\par
+CREATE TABLE products (\par
+    product_no integer,\par
+    name text,\par
+    price numeric CHECK (price > 0),\par
+    discounted_price numeric CHECK (discounted_price > 0),\par
+    CHECK (price > discounted_price)\par
+);\par
+CREATE TABLE products (\par
+    product_no integer,\par
+    name text,\par
+    price numeric,\par
+    CHECK (price > 0),\par
+    discounted_price numeric,\par
+    CHECK (discounted_price > 0),\par
+    CHECK (price > discounted_price)\par
+);\par
+CREATE TABLE products (\par
+    product_no integer,\par
+    name text,\par
+    price numeric CHECK (price > 0),\par
+    discounted_price numeric,\par
+    CHECK (discounted_price > 0 AND price > discounted_price)\par
+);\par
+\par
+\ul Foreign Key\par
+\ulnone A foreign key constraint specifies that the values in a column (or a group of columns) must match the values appearing in some row of another table. We say this maintains the referential integrity between two related tables.\par
+A general example is as follows:\par
+CREATE TABLE products (\par
+    product_no integer PRIMARY KEY,\par
+    name text,\par
+    price numeric\par
+);\par
+\par
+CREATE TABLE orders (\par
+    order_id integer PRIMARY KEY,\par
+    shipping_address text,\par
+    ...\par
+);\par
+\par
+CREATE TABLE order_items (\par
+    product_no integer REFERENCES products,\par
+    order_id integer REFERENCES orders,\par
+    quantity integer,\par
+    PRIMARY KEY (product_no, order_id)\par
+);\par
+}
+ 

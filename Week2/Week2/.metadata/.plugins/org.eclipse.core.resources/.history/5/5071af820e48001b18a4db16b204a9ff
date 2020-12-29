@@ -1,0 +1,124 @@
+package com.app.main;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Scanner;
+
+import com.app.dao.PlayerCrudDAO;
+import com.app.dao.PlayerSearchDAO;
+import com.app.dao.impl.PlayerCrudDAOImpl;
+import com.app.dao.impl.PlayerSearchDAOImpl;
+import com.app.exception.BusinessException;
+import com.app.model.Player;
+
+public class PlayerMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		PlayerCrudDAO dao = new PlayerCrudDAOImpl();
+		
+		PlayerSearchDAO sDao = new PlayerSearchDAOImpl();
+		
+//		Player p = new Player(12, "Paul Thomson", 103, 26, "Forward", new Date(1994/04/25));
+//		
+//		try {
+//			if(dao.createPlayer(p)!=0) {
+//				System.out.println("Player created successfully");
+//			}
+//		} catch (BusinessException e) {
+//			System.out.println(e.getMessage());
+//		}
+		
+		
+		try {
+			Player player = dao.getPlayerbyId(10);
+			if (player!=null) {
+				System.out.println("Details of player with Id " + player.getPlayerid());
+				System.out.println(player);
+			}
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+		}
+		
+//		try {
+//			Scanner sc = new Scanner(System.in);
+//			System.out.println("Write the playerid to be deleted: ");
+//			int playerid = sc.nextInt();
+//			System.out.println("Deleting player with Id " + playerid);
+//			dao.deletePlayer(playerid);
+//		} catch (BusinessException e1) {
+//			System.out.println(e1.getMessage());
+//		}
+		
+		
+		try {
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Player id: ");
+			int playerid = sc.nextInt();
+			System.out.print("\nNew position: ");
+			String newPosition = sc.next();
+			if (dao.updatePlayerPosition(playerid, newPosition) != 0) {
+				System.out.println("Player with id: " + playerid + " successfully updated");
+			} else {
+				System.out.println("Update failed");}
+		} catch (BusinessException e1) {
+			System.out.println(e1.getMessage());
+		}
+			
+		
+		
+		try {
+			List<Player> playerList = dao.getAllPlayers();
+
+			if (playerList!=null && playerList.size()!=0) {
+				System.out.println("\n\nFound " + playerList.size() + " players in DB... printing them all");
+				for (Player p : playerList) {
+					System.out.println(p);
+				}
+			}
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+		}
+		
+//		SimpleDateFormat dobFormat = new SimpleDateFormat("dd-mm-yyyy");
+//		Date dob = new Date(1993, 8, 17);
+		Date dob = new GregorianCalendar(1993, 7, 17).getTime();
+//		try {
+//			dob = dobFormat.parse("17-08-1993");
+//		} catch (ParseException e2) {
+//			System.out.println(e2);
+//		}
+		try {
+			System.out.println("fecha  " + dob);
+			Player p3 = sDao.getPlayerByDob(dob);
+			if (p3 != null) {
+				System.out.println("Player whose dob is " + dob);
+				System.out.println(p3);
+			} else {
+				System.out.println("No player has born in that date");
+			}
+			
+		} catch (BusinessException e1) {
+			System.out.println(e1.getMessage());
+		}
+		
+		
+		try {
+			List<Player> playersPosition = sDao.getPlayersByPosition("Defender");
+			System.out.println("\nPlayers in Defender Position" );
+			for (Player p2 : playersPosition) {
+				System.out.println(p2);
+				
+			}
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+		}
+		
+
+	}
+
+}

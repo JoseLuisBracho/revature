@@ -1,0 +1,143 @@
+package com.app.dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.app.dao.PlayerCrudDAO;
+import com.app.dao.dbutil.PostgresqlConnection;
+import com.app.exception.BusinessException;
+import com.app.model.Player;
+
+public class PlayerCrudDAOImpl implements PlayerCrudDAO{
+
+	@Override
+	public int createPlayer(Player player) throws BusinessException {
+		// TODO Auto-generated method stub
+		int c = 0;
+		try {
+			Connection connection = PostgresqlConnection.getConnection();
+			String sql = "insert into \"Test\".player(playerid, playername, teamid, age, position, dob) values(?,?,?,?,?,?)";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, player.getPlayerid());
+			preparedStatement.setString(2, player.getPlayername());
+			preparedStatement.setInt(3, player.getTeamid());
+			preparedStatement.setInt(4, player.getAge());
+			preparedStatement.setString(5, player.getPosition());
+			preparedStatement.setDate(6, new java.sql.Date(player.getDob().getTime()));
+			
+			c = preparedStatement.executeUpdate();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new BusinessException("Internal error ocurred, contact SysAdmin");
+		}
+		return c;
+	}
+
+	@Override
+	public void deletePlayer(int playerid) throws BusinessException {
+		try {
+			Connection connection = PostgresqlConnection.getConnection();
+			String sql = "delete from \"Test\".player where playerid = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, playerid);
+		
+			int del = preparedStatement.executeUpdate();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new BusinessException("An internal Error has Ocurred");
+		}
+	}
+
+	@Override
+	public int updatePlayerPosition(int playerid, String newPosition) throws BusinessException {
+		// TODO Auto-generated method stub
+		int c = 0;
+		try {
+			Connection connection = PostgresqlConnection.getConnection();
+			String sql = "update \"Test\".player set newPosition = ? where playerid = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			preparedStatement.setString(1, newPosition);
+			preparedStatement.setInt(2, playerid);
+			
+			c = preparedStatement.executeUpdate();
+			
+			System.out.println("ejecucionr bien");
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new BusinessException("An internal Error has Ocurred");
+		}
+		return c;
+	}
+
+	@Override
+	public Player getPlayerbyId(int playerid) throws BusinessException {
+		// TODO Auto-generated method stub
+		Player player = null;
+		try {
+			Connection connection = PostgresqlConnection.getConnection();
+			String sql = "select playername, teamid, age, position, dob from \"Test\".player where playerid = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, playerid);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				player = new Player();
+				player.setPlayerid(playerid);
+				player.setPlayername(resultSet.getString("playername"));
+				player.setTeamid(resultSet.getInt("teamid"));
+				player.setAge(resultSet.getInt("age"));
+				player.setPosition(resultSet.getString("position"));
+				player.setDob(resultSet.getDate("dob"));
+			} else {
+				throw new BusinessException("Player with id " + playerid + " not found");
+			}
+
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new BusinessException("Internal Error Ocurred");
+		}
+		return player;
+	}
+
+	@Override
+	public List<Player> getAllPlayers() throws BusinessException {
+		// TODO Auto-generated method stub
+		List<Player> playersList = new ArrayList<>();
+		
+		try {
+			Connection connection = PostgresqlConnection.getConnection();
+			String sql = "select playerid, playername, teamid, age, position, dob from \"Test\".player";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while(resultSet.next()) {
+				Player player = new Player();
+				player.setPlayerid(resultSet.getInt("playerid"));;
+				player.setPlayername(resultSet.getString("playername"));
+				player.setTeamid(resultSet.getInt("teamid"));
+				player.setAge(resultSet.getInt("age"));
+				player.setPosition(resultSet.getString("position"));
+				player.setDob(resultSet.getDate("dob"));
+				
+				playersList.add(player);
+			}
+			
+			if(playersList.size()==0) {
+				throw new BusinessException("No players in DB... so far");
+			}
+		
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new BusinessException("Internal Error Ocurred");
+		}
+		return playersList;
+	}
+	
+
+}
