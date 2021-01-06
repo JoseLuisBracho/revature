@@ -1,0 +1,34 @@
+package com.reflection;
+
+public class ReflectionConcrete extends ReflectionClass implements ReflectionInterface {
+
+	public static void main(String[] args) throws ClassNotFoundException {
+		// TODO Auto-generated method stub
+
+		Class c = Class.forName("ReflectionClass");
+		System.out.println(c.getName()); 
+
+	}
+
+	@Override
+	public void method1() {
+		// TODO Auto-generated method stub
+		System.out.println("Method1 implemented");
+		
+	}
+
+	@Override
+	public int method2(String str) {
+		// TODO Auto-generated method stub
+		System.out.println("Method2 implemented");
+		return 0;
+	}
+	
+	@Override
+	public int method4() {
+		System.out.println("Method4 overriden");
+		return 0;
+		
+	}
+
+}

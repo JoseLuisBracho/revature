@@ -1,0 +1,473 @@
+package com.reflection;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ReflectionConcrete extends ReflectionClass implements ReflectionInterface {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ReflectionClass rClass = new ReflectionClass();
+		ReflectionConcrete rConcrete = new ReflectionConcrete();
+		System.out.println("*****Using getClass method******");
+		rConcrete.printName(rClass);
+		
+		Class<?> reflectionConcrete = ReflectionConcrete.class;
+		try {
+			reflectionConcrete = Class.forName("com.reflection.ReflectionClass");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		System.out.println("\n*******Using forName method*******");
+		System.out.println(reflectionConcrete.getName());
+		
+		System.out.println("\n*******Prints Canonical Name*********");
+		System.out.println(reflectionConcrete.getCanonicalName());
+		
+		
+		//for primitive types, wrapper classes and arrays
+		Class<?> booleanClass = boolean.class;
+		System.out.println(booleanClass.getCanonicalName()); // prints boolean
+
+		Class<?> cDouble = Double.TYPE;
+		System.out.println(cDouble.getCanonicalName()); // prints double
+
+		Class<?> cDoubleArray = null;
+		try {
+			cDoubleArray = Class.forName("[D");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(cDoubleArray.getCanonicalName()); //prints double[]
+
+		Class<?> twoDStringArray = String[][].class;
+		System.out.println(twoDStringArray.getCanonicalName()); // prints java.lang.String[][]
+		
+		
+		Class<?> superClass = null;
+		try {
+			superClass = Class.forName("com.reflection.ReflectionConcrete").getSuperclass();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("\n*******Prints super class or parent class********");
+		System.out.println(superClass); // prints "class com.reflection.ReflectionClass"
+		System.out.println(Object.class.getSuperclass()); // prints "null"
+		System.out.println(String[][].class.getSuperclass());// prints "class java.lang.Object"
+		
+		System.out.println("\n******Prints got public classes********");
+		Class<?>[] classes = null;
+		try {
+			classes = Class.forName("com.reflection.ReflectionConcrete").getClasses();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println(Arrays.toString(classes));
+		
+		
+		System.out.println("\n***All of the classes, interfaces, and enums that are explicitly declared in ReflectionConcrete***");
+		System.out.println("**********Printing declared classes**********");
+		Class<?>[] explicitClasses = null;
+		try {
+			explicitClasses = Class.forName("com.reflection.ReflectionConcrete").getDeclaredClasses();
+		} catch (SecurityException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(Arrays.toString(explicitClasses));
+		
+		
+		System.out.println("\n*******Printing declaring class*********");
+		Class<?> innerClass = null;
+		try {
+			innerClass = Class.forName("com.reflection.ReflectionConcrete$ReflectionConcreteDefaultClass");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(innerClass.getDeclaringClass().getCanonicalName());
+		System.out.println(innerClass.getEnclosingClass().getCanonicalName());
+		
+		//prints "com.reflection"
+		System.out.println("\n**********Getting package name**********");
+		try {
+			System.out.println(Class.forName("com.reflection.ReflectionInterface").getPackage().getName());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+		System.out.println("\n********Getting class modifiers********");
+		System.out.println(Modifier.toString(reflectionConcrete.getModifiers())); //prints "public"
+		// prints "public abstract interface"
+		try {
+			System.out.println(Modifier.toString(Class.forName("com.reflection.ReflectionInterface").getModifiers()));
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		
+		System.out.println("\n*********Getting type parameters*********");
+		TypeVariable<?>[] typeParameters = null;
+		try {
+			typeParameters = Class.forName("java.util.HashMap").getTypeParameters();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(TypeVariable<?> t : typeParameters)
+		System.out.print(t.getName()+",");
+		
+		
+		System.out.println("\n*********Getting implemented interfaces*********");
+		Type[] interfaces = null;
+		try {
+			interfaces = Class.forName("java.util.HashMap").getGenericInterfaces();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//prints "[java.util.Map<K, V>, interface java.lang.Cloneable, interface java.io.Serializable]"
+		System.out.println(Arrays.toString(interfaces));
+		//prints "[interface java.util.Map, interface java.lang.Cloneable, interface java.io.Serializable]"
+		try {
+			System.out.println(Arrays.toString(Class.forName("java.util.HashMap").getInterfaces()));
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		System.out.println("\n********Getting all public methods********");
+		Method[] publicMethods = null;
+		try {
+			publicMethods = Class.forName("com.reflection.ReflectionConcrete").getMethods();
+		} catch (SecurityException | ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// Prints public methods of ReflectionConcrete, ReflectionClass, Object
+		System.out.println(Arrays.toString(publicMethods));
+		
+				
+		System.out.println("\n*********Getting all public constructors*********");
+		Constructor<?>[] publicConstructors = null;
+		try {
+			publicConstructors = Class.forName("com.reflection.ReflectionConcrete").getConstructors();
+		} catch (SecurityException | ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		// Prints public constructors of ReflectionConcrete
+		System.out.println(Arrays.toString(publicConstructors));
+		
+		System.out.println("\n********Getting all public fields*********");
+		Field[] publicFields = null;
+		try {
+			publicFields = Class.forName("com.reflection.ReflectionConcrete").getFields();
+		} catch (SecurityException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//prints public fields of ConcreteClass, it's superclass and super interfaces
+		System.out.println(Arrays.toString(publicFields));
+		
+		
+		System.out.println("\n*********Getting all the annotations");
+		java.lang.annotation.Annotation[] annotations = null;
+		try {
+			annotations = Class.forName("com.reflection.ReflectionConcrete").getAnnotations();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Prints [@java.lang.Deprecated()]
+		System.out.println(Arrays.toString(annotations));
+		
+		
+		System.out.println("\n\n************Java Reflection for fields**********");
+		System.out.println("\n*******Getting the field declaring class*******");
+		try {
+			Field field = Class.forName("com.reflection.ReflectionConcrete").getField("interfaceInt");
+			Class<?> fieldClass = field.getDeclaringClass();
+			System.out.println(fieldClass.getCanonicalName()); //prints com.journaldev.reflection.BaseInterface
+		} catch (NoSuchFieldException | SecurityException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("\n************Getting field type************");
+		Field field = null;
+		try {
+			field = Class.forName("com.reflection.ReflectionConcrete").getField("publicInt");
+		} catch (NoSuchFieldException | SecurityException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Class<?> fieldType = field.getType();
+		System.out.println(fieldType.getCanonicalName()); // Prints int	
+		
+		System.out.println("\n************Setting/Getting public field value**********");
+		Field field1 = null;
+		try {
+			field1 = Class.forName("com.reflection.ReflectionConcrete").getField("publicInt");
+		} catch (NoSuchFieldException | SecurityException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ReflectionConcrete obj = new ReflectionConcrete(5);
+		try {
+			System.out.println(field1.get(obj));
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Prints 5
+		try {
+			field1.setInt(obj, 10);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Setting field value to 10 in object
+		try {
+			System.out.println(field1.get(obj));
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Prints 10
+		
+		System.out.println("\n************Setting/Getting private field value**********");
+		Field privateField = null;
+		try {
+			privateField = Class.forName("com.reflection.ReflectionConcrete").getDeclaredField("privateString");
+		} catch (NoSuchFieldException | SecurityException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//turning off access check with below method call
+		privateField.setAccessible(true);
+		ReflectionConcrete objTest = new ReflectionConcrete(1);
+		try {
+			System.out.println(privateField.get(objTest));
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // prints "private string"
+		try {
+			privateField.set(objTest, "private string updated");
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			System.out.println(privateField.get(objTest));
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //prints "private string updated"
+		
+		
+		
+		System.out.println("\n\n************Java Reflection for Methods**********");
+		System.out.println("\n*********Getting public method*********");
+		Method method = null;
+		try {
+			method = Class.forName("java.util.HashMap").getMethod("put", Object.class, Object.class);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		//get method parameter types, prints "[class java.lang.Object, class java.lang.Object]"
+		System.out.println(Arrays.toString(method.getParameterTypes()));
+		//get method return type, return "class java.lang.Object", class reference for void
+		System.out.println(method.getReturnType());
+		//get method modifiers
+		System.out.println(Modifier.toString(method.getModifiers())); //prints "public"
+		
+		System.out.println("\n**********Invoking public method************");
+		try {
+			Method method1 = Class.forName("java.util.HashMap").getMethod("put", Object.class, Object.class);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		Map<String, String> hm = new HashMap<>();
+		try {
+			method.invoke(hm, "key", "value");
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		System.out.println(hm); // Prints {key=value}
+		
+		System.out.println("\n**********Invoking private method*********");
+		Method method2 = null;
+		try {
+			method2 = Class.forName("com.reflection.ReflectionClass").getDeclaredMethod("Method3", null);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		method2.setAccessible(true);
+		try {
+			method2.invoke(null, null);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		} // Prints "Method3"
+		
+		
+		System.out.println("\n\n************Java Reflection for Constructors**********");
+		System.out.println("\n**********Getting public constructor*********");
+		Constructor<?> constructor = null;
+		try {
+			constructor = Class.forName("com.reflection.ReflectionConcrete").getConstructor(int.class);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		//getting constructor parameters
+		System.out.println(Arrays.toString(constructor.getParameterTypes())); // Prints "[int]"
+		
+		Constructor<?> hashMapConstructor = null;
+		try {
+			hashMapConstructor = Class.forName("java.util.HashMap").getConstructor(null);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		System.out.println(Arrays.toString(hashMapConstructor.getParameterTypes())); // prints "[]"
+		
+		
+		System.out.println("\n************Instantiating a public constructor************");
+		Constructor<?> constructor1 = null;
+		try {
+			constructor1 = Class.forName("com.reflection.reflectionConcrete").getConstructor(int.class);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		//getting constructor parameters
+		System.out.println(Arrays.toString(constructor.getParameterTypes())); // prints "[int]"
+				
+		Object myObj = null;
+		try {
+			myObj = constructor1.newInstance(10);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		Method myObjMethod = null;
+		try {
+			myObjMethod = myObj.getClass().getMethod("method1", null);
+		} catch (NoSuchMethodException | SecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			myObjMethod.invoke(myObj, null);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} //prints "Method1 impl."
+
+		Constructor<?> hashMapConstructor1 = null;
+		try {
+			hashMapConstructor1 = Class.forName("java.util.HashMap").getConstructor(null);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(Arrays.toString(hashMapConstructor1.getParameterTypes())); // prints "[]"
+		try {
+			HashMap<String,String> myMap = (HashMap<String,String>) hashMapConstructor1.newInstance(null);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	public int publicInt;
+	private String privateString="private string";
+	protected boolean protectedBoolean;
+	Object defaultObject;
+	
+	// Constructors
+	public ReflectionConcrete() {
+		// TODO Auto-generated constructor stub
+	}
+	public ReflectionConcrete(int i){
+		this.publicInt=i;
+	}
+	
+	void printName(Object obj){  
+		Class<? extends Object> c=obj.getClass();    
+		System.out.println(c.getName());  
+	 }  
+
+	
+	@Override
+	public void method1() {
+		// TODO Auto-generated method stub
+		System.out.println("Method1 implemented");
+		
+	}
+
+	@Override
+	public int method2(String str) {
+		// TODO Auto-generated method stub
+		System.out.println("Method2 implemented");
+		return 0;
+	}
+	
+	@Override
+	public int method4() {
+		System.out.println("Method4 overriden");
+		return 0;
+		
+	}
+	
+	// Inner classes to Concrete Class
+	public class ReflectionConcretePublicClass{
+		
+	}
+	private class ReflectionConcretePrivateClass{
+		
+	}
+	protected class ReflectionConcreteProtectedClass{
+		
+	}
+	class ReflectionConcreteDefaultClass{
+		
+	}
+	
+	// Member enum
+	enum ReflectionConcreteDefaultEnum{
+		
+	}
+	public enum ReflectionConcretePublicEnum{
+		
+	}
+	
+	// Member interface
+	public interface ReflectionConcretePublicInterface{
+		
+	}
+
+}

@@ -1,0 +1,133 @@
+package com.reflection;
+
+import java.util.Arrays;
+
+public class ReflectionConcrete extends ReflectionClass implements ReflectionInterface {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ReflectionClass rClass = new ReflectionClass();
+		ReflectionConcrete rConcrete = new ReflectionConcrete();
+		System.out.println("*****Using getClass method******");
+		rConcrete.printName(rClass);
+		
+		Class<?> reflectionConcrete = ReflectionConcrete.class;
+		try {
+			reflectionConcrete = Class.forName("com.reflection.ReflectionClass");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		System.out.println("\n*******Using forName method*******");
+		System.out.println(reflectionConcrete.getName());
+		
+		System.out.println("\n*******Prints Canonical Name*********");
+		System.out.println(reflectionConcrete.getCanonicalName());
+		
+		
+		//for primitive types, wrapper classes and arrays
+		Class<?> booleanClass = boolean.class;
+		System.out.println(booleanClass.getCanonicalName()); // prints boolean
+
+		Class<?> cDouble = Double.TYPE;
+		System.out.println(cDouble.getCanonicalName()); // prints double
+
+		Class<?> cDoubleArray = null;
+		try {
+			cDoubleArray = Class.forName("[D");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(cDoubleArray.getCanonicalName()); //prints double[]
+
+		Class<?> twoDStringArray = String[][].class;
+		System.out.println(twoDStringArray.getCanonicalName()); // prints java.lang.String[][]
+		
+		
+		Class<?> superClass = null;
+		try {
+			superClass = Class.forName("com.reflection.ReflectionConcrete").getSuperclass();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("\n*******Prints super class or parent class********");
+		System.out.println(superClass); // prints "class com.reflection.ReflectionClass"
+		System.out.println(Object.class.getSuperclass()); // prints "null"
+		System.out.println(String[][].class.getSuperclass());// prints "class java.lang.Object"
+		
+		System.out.println("\n******Prints got public classes********");
+		Class<?>[] classes = reflectionConcrete.getClasses();
+		System.out.println(Arrays.toString(classes));
+		
+		
+		System.out.println("All of the classes, interfaces, and enums that are explicitly declared in ReflectionConcrete");
+		Class<?>[] explicitClasses = null;
+		try {
+			explicitClasses = Class.forName("com.reflection.ReflectionConcrete").getDeclaredClasses();
+		} catch (SecurityException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(Arrays.toString(explicitClasses));
+		
+
+	}
+	
+	void printName(Object obj){  
+		Class<? extends Object> c=obj.getClass();    
+		System.out.println(c.getName());  
+	 }  
+
+	
+	@Override
+	public void method1() {
+		// TODO Auto-generated method stub
+		System.out.println("Method1 implemented");
+		
+	}
+
+	@Override
+	public int method2(String str) {
+		// TODO Auto-generated method stub
+		System.out.println("Method2 implemented");
+		return 0;
+	}
+	
+	@Override
+	public int method4() {
+		System.out.println("Method4 overriden");
+		return 0;
+		
+	}
+	
+	// Inner classes to Concrete Class
+	public class ConcreteClassPublicClass{
+		
+	}
+	private class ConcreteClassPrivateClass{
+		
+	}
+	protected class ConcreteClassProtectedClass{
+		
+	}
+	class ConcreteClassDefaultClass{
+		
+	}
+	
+	// Member enum
+	enum ConcreteClassDefaultEnum{
+		
+	}
+	public enum ConcreteClassPublicEnum{
+		
+	}
+	
+	// Member interface
+	public interface ConcreteClassPublicInterface{
+		
+	}
+
+}

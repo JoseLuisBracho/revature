@@ -1,0 +1,55 @@
+package com.reflection;
+
+public class ReflectionConcrete extends ReflectionClass implements ReflectionInterface {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ReflectionClass rClass = new ReflectionClass();
+		ReflectionConcrete rConcrete = new ReflectionConcrete();
+		System.out.println("*****Using getClass method******");
+		rConcrete.printName(rClass);
+		
+		Class<?> reflectionConcrete = ReflectionConcrete.class;
+		try {
+			reflectionConcrete = Class.forName("ReflectionClass");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		System.out.println("\n*******Using forName method*******");
+		System.out.println(reflectionConcrete.getName());
+		
+		System.out.println("\n*******Prints Canonical Name*********");
+		System.out.println(reflectionConcrete.getCanonicalName());
+		
+
+	}
+	
+	void printName(Object obj){  
+		Class<? extends Object> c=obj.getClass();    
+		System.out.println(c.getName());  
+	 }  
+
+	
+	@Override
+	public void method1() {
+		// TODO Auto-generated method stub
+		System.out.println("Method1 implemented");
+		
+	}
+
+	@Override
+	public int method2(String str) {
+		// TODO Auto-generated method stub
+		System.out.println("Method2 implemented");
+		return 0;
+	}
+	
+	@Override
+	public int method4() {
+		System.out.println("Method4 overriden");
+		return 0;
+		
+	}
+
+}
