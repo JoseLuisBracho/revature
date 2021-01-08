@@ -1,0 +1,44 @@
+package com.mockito.calcserv.test2;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.mockitodemo.addserv.Calculadora;
+import com.mockitodemo.calcserv.CalculatorService;
+
+public class CalculatorServiceTest2 {
+	
+	// Same example using mock annotation
+	CalculatorService calculatorService;
+	
+	@Mock
+	Calculadora calculadora;
+	
+	@BeforeEach
+	public void setup() {
+		MockitoAnnotations.initMocks(this);
+	}
+	
+	@Test
+	public void testCalculatorService1() {
+		System.out.println("******* Testing calculator *******");
+		
+		calculatorService = new CalculatorService(calculadora);
+		
+		int a = 45;
+		int b = 14;
+		int expected = 59;
+		
+		when(calculadora.add(a, b)).thenReturn(expected);
+		
+		int actual = calculadora.add(a, b);
+		
+		assertEquals(expected, actual);
+	}
+
+}

@@ -1,0 +1,10 @@
+package inter_thread_communication;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

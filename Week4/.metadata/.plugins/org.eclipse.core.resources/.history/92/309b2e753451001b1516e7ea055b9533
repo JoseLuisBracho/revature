@@ -1,0 +1,20 @@
+package extending_thread_class;
+
+public class ThreadDemo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.out.println(Thread.currentThread()); // Returns main thread
+		
+		Thread tr = Thread.currentThread();
+		tr.setName("myThread");
+		tr.setPriority(7);
+		
+		System.out.println(Thread.currentThread()); // Shows both main and myThread
+		
+		MyThread myT1 = new MyThread(); 
+
+	}
+
+}

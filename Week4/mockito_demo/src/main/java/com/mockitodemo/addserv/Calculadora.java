@@ -1,0 +1,13 @@
+package com.mockitodemo.addserv;
+
+public interface Calculadora {
+	
+	public int add(int a, int b);
+	
+	public int minus(int a, int b);
+	
+	public int mult(int a, int b);
+	
+	public double div(int a, int b);
+
+}

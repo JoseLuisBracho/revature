@@ -1,0 +1,5 @@
+package com.mockito.calcserv.test2;
+
+public class CalculatorServiceTest2 {
+
+}

@@ -1,0 +1,43 @@
+package extending_thread_class;
+
+public class ThreadDemo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.out.println(Thread.currentThread()); // Returns main thread
+		
+		Thread tr = Thread.currentThread();
+		tr.setName("myThread");
+		// tr.setPriority(7);
+		
+		// System.out.println(Thread.currentThread()); // Shows both main and myThread
+		
+		MyThread myT1 = new MyThread();
+		MyThread myT2 = new MyThread(); 
+		MyThread myT3 = new MyThread(); 
+		MyThread myT4 = new MyThread(); 
+		MyThread myT5 = new MyThread();
+		
+		myT1.start();
+		myT2.start();
+		myT3.start();
+		myT4.start();
+		myT5.start();
+		
+		
+		for (int i = 0; i < 4; i++) {
+			System.out.println("Printing from thread - " + Thread.currentThread().getName() + " value of i =" + (i+1));
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+
+	}
+
+}

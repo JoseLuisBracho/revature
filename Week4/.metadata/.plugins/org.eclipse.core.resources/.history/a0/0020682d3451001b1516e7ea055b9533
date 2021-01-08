@@ -1,0 +1,5 @@
+package extending_thread_class;
+
+public class MyThread {
+
+}
